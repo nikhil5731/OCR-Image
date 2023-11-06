@@ -1,0 +1,44 @@
+const { createWorker } = require("tesseract.js");
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const app = express();
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Connect to MongoDB (you'll need to set up your MongoDB connection)
+mongoose
+  .connect(
+    "mongodb+srv://nikhil:nikhil@cluster0.i9ncprw.mongodb.net/?retryWrites=true&w=majority"
+  )
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Failed to connect to MongoDB", err));
+
+app.post("/upload", upload.single("image"), async (req, res) => {
+  try {
+    // console.log(req.file.path);
+    if (!req.file) {
+      return res.json({ result: "No file uploaded" });
+    }
+    const worker = await createWorker("eng");
+    const { path } = req.file;
+    const {
+      data: { text },
+    } = await worker.recognize(path);
+    await worker.terminate();
+    return res.json({ result: text });
+  } catch (error) {
+    console.log(error.message);
+    return res.json({ error: "Server error" });
+  }
+});
+
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
