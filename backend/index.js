@@ -1,6 +1,5 @@
 const { createWorker } = require("tesseract.js");
 const express = require("express");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const multer = require("multer");
@@ -10,14 +9,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Connect to MongoDB (you'll need to set up your MongoDB connection)
-mongoose
-  .connect(
-    "mongodb+srv://nikhil:nikhil@cluster0.i9ncprw.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Failed to connect to MongoDB", err));
 
 app.post("/upload", upload.single("image"), async (req, res) => {
   try {
