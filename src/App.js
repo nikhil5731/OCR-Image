@@ -111,17 +111,17 @@ function App() {
 
   return (
     <>
-      <p className="mb-3 text-gray-800 dark:text-gray-400 text-center my-5">
+      <p className="m-5 text-gray-800 dark:text-gray-400 text-center">
         *Note: We have to update the keywords array for getting better result as
         keyword array is hard-coded for the assignment image only
       </p>
-      <div className="flex items-center m-10 mt-0 justify-between">
+      <div className="md:flex md: md:items-center m-10 mt-0 md:justify-between">
         {imagePreview && (
           <div className="flex justify-center w-full mr-4">
             <img src={imagePreview} alt="" />
           </div>
         )}
-        <div className="flex flex-col gap-5 items-center w-full">
+        <div className="flex mt-5 md:mt-0 flex-col gap-5 items-center w-full">
           <div className="flex items-center justify-center w-full">
             <label
               for="dropzone-file"
