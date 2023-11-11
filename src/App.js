@@ -88,7 +88,7 @@ function App() {
       const formData = new FormData();
       formData.append("image", selectedFile);
       const response = await axios.post(
-        "http://localhost:3001/upload",
+        `${process.env.REACT_APP_BACKEND_URL}/upload`,
         formData,
         {
           headers: {
